@@ -7,7 +7,7 @@ impl CommandRequest {
         Self {
             request_data: Some(RequestData::Hset(Hset {
                 table: table.into(),
-                pair: Some(Kvpair::new_kvpair(key.into(), value.into())),
+                pair: Some(Kvpair::new(key.into(), value.into())),
             })),
         }
     }
@@ -15,7 +15,7 @@ impl CommandRequest {
 
 // 实现创建keypair
 impl Kvpair {
-    pub fn new_kvpair(key: impl Into<String>, value: Value) -> Self {
+    pub fn new(key: impl Into<String>, value: Value) -> Self {
         Self {
             key: key.into(),
             value: Some(value),
