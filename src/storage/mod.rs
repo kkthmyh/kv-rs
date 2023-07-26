@@ -1,5 +1,6 @@
-mod storage;
 mod memory;
+pub use memory::MemTable;
+
 use crate::{KvError, Kvpair, Value};
 
 pub trait Storage {

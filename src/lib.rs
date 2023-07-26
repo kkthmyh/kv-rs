@@ -3,6 +3,7 @@ mod storage;
 mod error;
 mod service;
 
-pub use crate::pb::abi::*;
+pub use pb::abi::*;
 pub use storage::*;
 pub use error::KvError;
+pub use service::*;
