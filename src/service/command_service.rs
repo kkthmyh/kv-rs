@@ -55,6 +55,9 @@ mod tests {
         assert_res_ok(res, &[], pairs);
     }
 
+
+    // 处理失败
+    #[cfg(test)]
     fn assert_res_error(res: CommandResponse, code: u32, msg: &str) {
         assert_eq!(res.status, code);
         assert!(res.message.contains(msg));
@@ -63,6 +66,7 @@ mod tests {
     }
 
     // 处理成功
+    #[cfg(test)]
     fn assert_res_ok(mut res: CommandResponse, values: &[Value], pairs: &[Kvpair]) {
         res.pairs.sort_by(|a, b| a.partial_cmp(b).unwrap());
         assert_eq!(res.status, 200);
