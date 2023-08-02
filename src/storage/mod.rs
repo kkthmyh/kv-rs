@@ -36,6 +36,12 @@ mod test {
         test_get_all(store);
     }
 
+    #[test]
+    fn memtable_iter_should_work() {
+        let store = MemTable::new();
+        test_get_iter(store);
+    }
+
     fn test_basi_interface<T>(store: T)
     where
         T: Storage,

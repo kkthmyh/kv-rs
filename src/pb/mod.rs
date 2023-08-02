@@ -68,3 +68,10 @@ impl From<i64> for Value {
         }
     }
 }
+
+
+impl From<(String, Value)> for Kvpair {
+    fn from(data: (String, Value)) -> Self {
+        Kvpair::new(data.0, data.1)
+    }
+}
