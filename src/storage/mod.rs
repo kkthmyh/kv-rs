@@ -1,16 +1,22 @@
 mod memory;
+mod sleddb;
+pub use sleddb::SledDb;
 pub use memory::MemTable;
-
 use crate::{KvError, Kvpair, Value};
 
 pub trait Storage {
-    /// 从table中获取指定key的value
+    /// 从一个 HashTable 里获取一个 key 的 value
     fn get(&self, table: &str, key: &str) -> Result<Option<Value>, KvError>;
-    /// 指定table 设置key value，返回旧的value
-    fn set(&self, table: &str, key: &str, value: Value) -> Result<Option<Value>, KvError>;
-    /// 是否包含
+    /// 从一个 HashTable 里设置一个 key 的 value，返回旧的 value
+    fn set(
+        &self,
+        table: &str,
+        key: impl Into<String>,
+        value: impl Into<Value>,
+    ) -> Result<Option<Value>, KvError>;
+    /// 查看 HashTable 中是否有 key
     fn contains(&self, table: &str, key: &str) -> Result<bool, KvError>;
-    /// 删除
+    /// 从 HashTable 中删除一个 key
     fn del(&self, table: &str, key: &str) -> Result<Option<Value>, KvError>;
     /// 遍历 HashTable，返回所有 kv pair（这个接口不好）
     fn get_all(&self, table: &str) -> Result<Vec<Kvpair>, KvError>;
@@ -20,9 +26,8 @@ pub trait Storage {
 
 #[cfg(test)]
 mod test {
-    use crate::{Kvpair, Storage};
+    use crate::{Kvpair, Storage, MemTable};
 
-    use super::memory::MemTable;
 
     #[test]
     fn memtable_basic_interface_should_work() {

@@ -24,41 +24,41 @@ impl MemTable {
     }
 }
 
-impl Storage for MemTable {
-    fn get(&self, table: &str, key: &str) -> Result<Option<Value>, KvError> {
-        let dashmap: Ref<'_, String, DashMap<String, Value>> = self.get_or_create_table(table);
-        Ok(dashmap.get(key).map(|v| v.value().clone()))
-    }
+// impl Storage for MemTable {
+//     fn get(&self, table: &str, key: &str) -> Result<Option<Value>, KvError> {
+//         let dashmap: Ref<'_, String, DashMap<String, Value>> = self.get_or_create_table(table);
+//         Ok(dashmap.get(key).map(|v| v.value().clone()))
+//     }
 
-    fn set(&self, table: &str, key: &str, value: Value) -> Result<Option<Value>, KvError> {
-        let dashmap: Ref<'_, String, DashMap<String, Value>> = self.get_or_create_table(table);
-        Ok(dashmap.insert(key.into(), value))
-    }
+//     fn set(&self, table: &str, key: &str, value: Value) -> Result<Option<Value>, KvError> {
+//         let dashmap: Ref<'_, String, DashMap<String, Value>> = self.get_or_create_table(table);
+//         Ok(dashmap.insert(key.into(), value))
+//     }
 
-    fn contains(&self, table: &str, key: &str) -> Result<bool, KvError> {
-        let dashmap: Ref<'_, String, DashMap<String, Value>> = self.get_or_create_table(table);
-        Ok(dashmap.contains_key(key))
-    }
+//     fn contains(&self, table: &str, key: &str) -> Result<bool, KvError> {
+//         let dashmap: Ref<'_, String, DashMap<String, Value>> = self.get_or_create_table(table);
+//         Ok(dashmap.contains_key(key))
+//     }
 
-    fn del(&self, table: &str, key: &str) -> Result<Option<Value>, KvError> {
-        let dashmap: Ref<'_, String, DashMap<String, Value>> = self.get_or_create_table(table);
-        Ok(dashmap.remove(key).map(|(k, v)| v))
-    }
+//     fn del(&self, table: &str, key: &str) -> Result<Option<Value>, KvError> {
+//         let dashmap: Ref<'_, String, DashMap<String, Value>> = self.get_or_create_table(table);
+//         Ok(dashmap.remove(key).map(|(k, v)| v))
+//     }
 
-    fn get_all(&self, table: &str) -> Result<Vec<Kvpair>, KvError> {
-        let dashmap: Ref<'_, String, DashMap<String, Value>> = self.get_or_create_table(table);
-        Ok(dashmap
-            .iter()
-            .map(|v| Kvpair::new(v.key(), v.value().clone()))
-            .collect())
-    }
+//     fn get_all(&self, table: &str) -> Result<Vec<Kvpair>, KvError> {
+//         let dashmap: Ref<'_, String, DashMap<String, Value>> = self.get_or_create_table(table);
+//         Ok(dashmap
+//             .iter()
+//             .map(|v| Kvpair::new(v.key(), v.value().clone()))
+//             .collect())
+//     }
 
-    fn get_iter(&self, table: &str) -> Result<Box<dyn Iterator<Item = Kvpair>>, KvError> {
-        let table = self.get_or_create_table(table).clone();
-        let iter = StorageIter::new(table.into_iter());
-        Ok(Box::new(iter))
-    }
-}
+//     fn get_iter(&self, table: &str) -> Result<Box<dyn Iterator<Item = Kvpair>>, KvError> {
+//         let table = self.get_or_create_table(table).clone();
+//         let iter = StorageIter::new(table.into_iter());
+//         Ok(Box::new(iter))
+//     }
+// }
 
 pub struct StorageIter<T> {
     data: T,

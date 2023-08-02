@@ -10,7 +10,7 @@ use tracing::info;
 #[tokio::main]
 async fn main() -> Result<()> {
     tracing_subscriber::fmt::init();
-    let addr = "127.0.0.1:8888";
+    let addr = "127.0.0.1:9528";
     // 连接服务器
     let stream = TcpStream::connect(addr).await?;
     let mut client =
